@@ -2,12 +2,20 @@ pipeline {
     agent any
 
     stages {
-        stage ("Check"){
+        stage ("Build"){
             steps{
                 script{
-                    echo 'Hello Wolrd'
+                    sh "mvn clean install"
                 }
             }
         }
+        stage ("Docker Image"){
+            steps{
+                script{
+                    sh "docker build -t ${buildname} ."
+                }
+            }
+        }
+
     }
 }
